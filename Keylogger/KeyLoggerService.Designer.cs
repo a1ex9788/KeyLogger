@@ -1,7 +1,7 @@
 ﻿
 namespace Keylogger
 {
-    partial class Service1
+    public partial class KeyLoggerService
     {
         /// <summary> 
         /// Required designer variable.
