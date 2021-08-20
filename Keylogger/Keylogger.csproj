@@ -44,11 +44,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="KeyLoggerService.cs">
+    <Compile Include="KeyloggerService.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="KeyLoggerService.Designer.cs">
-      <DependentUpon>KeyLoggerService.cs</DependentUpon>
+    <Compile Include="KeyloggerService.Designer.cs">
+      <DependentUpon>KeyloggerService.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
