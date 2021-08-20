@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Linq;
 using System.ServiceProcess;
 
 namespace RegisterItAll
@@ -7,7 +7,7 @@ namespace RegisterItAll
     {
         public static void Main(string[] args)
         {
-            if (Environment.UserInteractive)
+            if (args.ToList().Contains("-RunAsConsoleApplication"))
             {
                 RegisterItAllService RegisterItAllService = new RegisterItAllService();
 
