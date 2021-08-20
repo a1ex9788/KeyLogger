@@ -3,20 +3,28 @@ using System.ServiceProcess;
 
 namespace Keylogger
 {
-    public partial class KeyLoggerService : ServiceBase
+    public partial class KeyloggerService : ServiceBase
     {
-        public KeyLoggerService()
+        public KeyloggerService()
         {
             InitializeComponent();
         }
 
-        protected override void OnStart(string[] args)
+        public void ExecuteAsConsoleApplication(string[] args)
         {
+            this.OnStart(args);
+
+            Console.ReadLine();
+
+            this.OnStop();
         }
 
-        protected override void OnContinue()
+        protected override void OnStart(string[] args)
         {
-            Console.WriteLine("qwegdfg");
+            while (true)
+            {
+                Console.WriteLine("I'm working.");
+            }
         }
 
         protected override void OnStop()
