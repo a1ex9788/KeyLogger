@@ -1,0 +1,5 @@
+Install: PW with admin permission
+New-Service -BinaryPathName C:\Users\Alejandro\source\repos\RegisterItAll\RegisterItAll\bin\Debug\RegisterItAll.exe -Name RegisterItAll
+
+Uninstall: Console with admin permission
+sc delete RegisterItAll
