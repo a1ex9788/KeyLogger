@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ServiceProcess;
 
-namespace Keylogger
+namespace RegisterItAll
 {
     public static class Program
     {
@@ -9,9 +9,9 @@ namespace Keylogger
         {
             if (Environment.UserInteractive)
             {
-                KeyloggerService keyloggerService = new KeyloggerService();
+                RegisterItAllService RegisterItAllService = new RegisterItAllService();
 
-                keyloggerService.ExecuteAsConsoleApplication(args);
+                RegisterItAllService.ExecuteAsConsoleApplication(args);
             }
             else
             {
@@ -19,7 +19,7 @@ namespace Keylogger
 
                 ServicesToRun = new ServiceBase[]
                 {
-                    new KeyloggerService()
+                    new RegisterItAllService()
                 };
 
                 ServiceBase.Run(ServicesToRun);
