@@ -15,13 +15,17 @@ namespace RegisterItAll.Services
         {
             while (true)
             {
-                TakeScreenshot();
+                try
+                {
+                    TakeScreenshot();
+                }
+                catch { }
 
                 await Task.Delay(DelaySecons * 1000);
             }
         }
 
-        private void TakeScreenshot()
+        private static void TakeScreenshot()
         {
             Rectangle screen = Screen.GetBounds(new Point(0, 0));
 
