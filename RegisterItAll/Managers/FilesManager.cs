@@ -8,45 +8,42 @@ namespace RegisterItAll.Managers
 {
     public static class FilesManager
     {
-        private const string logsFile = "logs.txt";
-        private const string screenshotsPrefix = "screenshot_";
+        private static string WorkingDirectory = Directory.GetCurrentDirectory();
+        private static string LogsFile = Path.Combine(WorkingDirectory, "logs.txt");
+        private static string ScreenshotsPrefix = "screenshot_";
 
         public static void SaveLog(string log)
         {
-            File.AppendAllText(logsFile, log);
+            File.AppendAllText(LogsFile, log);
         }
 
-        public static string GetLogs()
+        public static string GetLogsFile()
         {
-            if (!File.Exists(logsFile))
-            {
-                return null;
-            }
-
-            return File.ReadAllText(logsFile);
+            return LogsFile;
         }
 
-        public static void RemoveLogs()
+        public static void RemoveLogsFile()
         {
-            if (!File.Exists(logsFile))
+            if (!File.Exists(LogsFile))
             {
                 return;
             }
 
-            File.Delete(logsFile);
+            File.Delete(LogsFile);
         }
 
         public static void SaveScreenshot(Bitmap bitmap)
         {
             // Example: screenshot_21.08.2021_15.44.52.jpeg
-            string snapshotName = $"{screenshotsPrefix}{DateTime.Now.ToString().Replace('/', '.').Replace(' ', '_').Replace(':', '.')}.jpeg";
+            string snapshotName = $"{ScreenshotsPrefix}{DateTime.Now.ToString().Replace('/', '.').Replace(' ', '_').Replace(':', '.')}.jpeg";
+            string snapshotPath = Path.Combine(WorkingDirectory, snapshotName);
 
-            bitmap.Save(snapshotName, ImageFormat.Jpeg);
+            bitmap.Save(snapshotPath, ImageFormat.Jpeg);
         }
 
         public static IEnumerable<string> GetScreenshots()
         {
-            return Directory.GetFiles(Directory.GetCurrentDirectory(), $"*{screenshotsPrefix}*");
+            return Directory.GetFiles(WorkingDirectory, $"*{ScreenshotsPrefix}*");
         }
 
         public static void RemoveScreenshots(IEnumerable<string> screenshots)

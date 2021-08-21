@@ -1,5 +1,6 @@
 ﻿using RegisterItAll.Managers;
 using RegisterItAll.Services.Base;
+using System;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -18,7 +19,10 @@ namespace RegisterItAll.Services
                 {
                     TakeScreenshot();
                 }
-                catch { }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
 
                 await Task.Delay(DelaySecons * 1000);
             }
