@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Managers\KeystrokesCapturer.cs" />
     <Compile Include="RegisterItAllService.cs">
       <SubType>Component</SubType>
     </Compile>
