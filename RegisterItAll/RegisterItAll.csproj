@@ -58,8 +58,6 @@
     <Compile Include="Services\KeystrokesCapturerService.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Managers\EmailsSender.cs" />
-    <Compile Include="Managers\ScreenCapturer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ScreenCapturerService.cs">
