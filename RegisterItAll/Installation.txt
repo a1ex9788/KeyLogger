@@ -3,3 +3,7 @@ New-Service -BinaryPathName C:\Users\Alejandro\source\repos\RegisterItAll\Regist
 
 Uninstall: Console with admin permission
 sc delete RegisterItAll
+
+Forced Uninstallation:
+sc.exe queryex RegisterItAll
+taskkill /pid <SERVICE_PID> /f
