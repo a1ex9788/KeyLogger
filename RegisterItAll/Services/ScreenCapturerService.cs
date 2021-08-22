@@ -1,6 +1,7 @@
 ﻿using RegisterItAll.Managers;
 using RegisterItAll.Services.Base;
 using System;
+using System.Configuration;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -9,7 +10,7 @@ namespace RegisterItAll.Services
 {
     public partial class ScreenCapturerService : ExecutableAsConsoleApplicationService
     {
-        private const int DelaySecons = 5;
+        private static int DelaySecons = Convert.ToInt32(ConfigurationManager.AppSettings.Get("ScreenshotFrequencyInSeconds"));
 
         protected override async void OnStart(string[] args)
         {

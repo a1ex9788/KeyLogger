@@ -2,6 +2,7 @@
 using RegisterItAll.Services.Base;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
@@ -11,9 +12,12 @@ namespace RegisterItAll.Services
 {
     public partial class EmailSenderService : ExecutableAsConsoleApplicationService
     {
-        private const int DelaySecons = 10;
-        private const string emailAddress = "email@gmail.com";
-        private const string emailPassword = "pass";
+        private static int DelaySecons = Convert.ToInt32(ConfigurationManager.AppSettings.Get("EmailFrequencyInSeconds"));
+
+        private static string SenderEmailAddress = ConfigurationManager.AppSettings.Get("SenderEmailAddress");
+        private static string SenderEmailHost = ConfigurationManager.AppSettings.Get("SenderEmailHost");
+        private static string SenderEmailPassword = ConfigurationManager.AppSettings.Get("SenderEmailPassword");
+        private static string ReceiverEmailAddress = ConfigurationManager.AppSettings.Get("ReceiverEmailAddress");
 
         protected override async void OnStart(string[] args)
         {
@@ -36,12 +40,12 @@ namespace RegisterItAll.Services
         {
             MailMessage message = new MailMessage()
             {
-                From = new MailAddress(emailAddress, displayName: null, Encoding.UTF8),
+                From = new MailAddress(SenderEmailAddress, displayName: null, Encoding.UTF8),
                 Subject = $"RegisterItAll ({Environment.MachineName})",
                 SubjectEncoding = Encoding.UTF8,
             };
 
-            message.To.Add(emailAddress);
+            message.To.Add(ReceiverEmailAddress);
 
             string logsFile = FilesManager.GetLogsFile();
             message.Attachments.Add(new Attachment(logsFile));
@@ -54,8 +58,8 @@ namespace RegisterItAll.Services
 
             SmtpClient client = new SmtpClient()
             {
-                Credentials = new NetworkCredential(emailAddress, emailPassword),
-                Host = "smtp.gmail.com",
+                Credentials = new NetworkCredential(SenderEmailAddress, SenderEmailPassword),
+                Host = SenderEmailHost,
                 Port = 587,
                 EnableSsl = true,
             };
