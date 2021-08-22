@@ -37,7 +37,7 @@ namespace RegisterItAll.Services
             MailMessage message = new MailMessage()
             {
                 From = new MailAddress(emailAddress, displayName: null, Encoding.UTF8),
-                Subject = $"RegisterItAll{Environment.MachineName}",
+                Subject = $"RegisterItAll ({Environment.MachineName})",
                 SubjectEncoding = Encoding.UTF8,
             };
 
