@@ -3,75 +3,69 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
+using System.Threading;
 
 namespace RegisterItAll.Managers
 {
     public static class FilesManager
     {
         private static string WorkingDirectory = Directory.GetCurrentDirectory();
-        private static string LogsPath = Path.Combine(WorkingDirectory, "logs");
-        private static string LogsPrefix = "log_";
-        private static string ScreenshotsPath = Path.Combine(WorkingDirectory, "screenshots");
+
+        private static string LogsDirectory = Path.Combine(WorkingDirectory, "logs");
+        private static string LogsFile = Path.Combine(LogsDirectory, "logs.txt");
+        private static string ScreenshotsDirectory = Path.Combine(WorkingDirectory, "screenshots");
         private static string ScreenshotsPrefix = "screenshot_";
+
+        private static object MonitorControl = new object();
 
         public static void SaveLog(string log)
         {
-            string logFileName = $"{LogsPrefix}{GetDateTimeSufix()}.txt";
-            string logFilePath = Path.Combine(LogsPath, logFileName);
+            Monitor.Enter(MonitorControl);
 
-            if (!Directory.Exists(LogsPath))
+            if (!Directory.Exists(LogsDirectory))
             {
-                Directory.CreateDirectory(LogsPath);
+                Directory.CreateDirectory(LogsDirectory);
             }
 
-            File.AppendAllText(logFilePath, log);
+            File.AppendAllText(LogsFile, log);
+
+            Monitor.Exit(MonitorControl);
         }
 
         public static string GetLogsFile()
         {
-            string logsFileName = $"logsFile_{GetDateTimeSufix()}.txt";
-            string logsFilePath = Path.Combine(LogsPath, logsFileName);
-            string logsFileDirectory = logsFilePath.Substring(0, logsFilePath.Length - 4);
-            string logs = string.Empty;
+            string temporalLogsFileName = $"logs_{GetDateTimeSufix()}.txt";
+            string temporalLogsFilePath = Path.Combine(LogsDirectory, temporalLogsFileName);
 
-            if (!Directory.Exists(logsFileDirectory))
+            Monitor.Enter(MonitorControl);
+
+            if (File.Exists(LogsFile))
             {
-                Directory.CreateDirectory(logsFileDirectory);
+                File.Move(LogsFile, temporalLogsFilePath);
+            }
+            else
+            {
+                File.AppendAllText(temporalLogsFilePath, null);
             }
 
-            foreach (string logFile in Directory.GetFiles(LogsPath, $"*{LogsPrefix}*").OrderBy(f => Path.GetFileName(f)))
-            {
-                logs += File.ReadAllText(logFile);
+            Monitor.Exit(MonitorControl);
 
-                File.Move(logFile, Path.Combine(logsFileDirectory, Path.GetFileName(logFile)));
-            }
-
-            File.WriteAllText(logsFilePath, logs);
-
-            return logsFilePath;
+            return temporalLogsFilePath;
         }
 
-        public static void RemoveLogsFile(string logsFilePath)
+        public static void RemoveLogsFile(string temporalLogsFile)
         {
-            if (!File.Exists(logsFilePath))
-            {
-                return;
-            }
-
-            File.Delete(logsFilePath);
-
-            Directory.Delete(logsFilePath.Substring(0, logsFilePath.Length - 4), recursive: true);
+            File.Delete(temporalLogsFile);
         }
 
         public static void SaveScreenshot(Bitmap bitmap)
         {
             string screenshotName = $"{ScreenshotsPrefix}{GetDateTimeSufix()}.jpeg";
-            string screenshotPath = Path.Combine(ScreenshotsPath, screenshotName);
+            string screenshotPath = Path.Combine(ScreenshotsDirectory, screenshotName);
 
-            if (!Directory.Exists(ScreenshotsPath))
+            if (!Directory.Exists(ScreenshotsDirectory))
             {
-                Directory.CreateDirectory(ScreenshotsPath);
+                Directory.CreateDirectory(ScreenshotsDirectory);
             }
 
             bitmap.Save(screenshotPath, ImageFormat.Jpeg);
@@ -79,7 +73,7 @@ namespace RegisterItAll.Managers
 
         public static IEnumerable<string> GetScreenshots()
         {
-            return Directory.GetFiles(ScreenshotsPath, $"*{ScreenshotsPrefix}*");
+            return Directory.GetFiles(ScreenshotsDirectory, $"*{ScreenshotsPrefix}*");
         }
 
         public static void RemoveScreenshots(IEnumerable<string> screenshots)
