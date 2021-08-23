@@ -45,6 +45,11 @@ namespace RegisterItAll.Managers
             }
             else
             {
+                if (!Directory.Exists(LogsDirectory))
+                {
+                    Directory.CreateDirectory(LogsDirectory);
+                }
+
                 File.AppendAllText(temporalLogsFilePath, null);
             }
 
@@ -73,6 +78,11 @@ namespace RegisterItAll.Managers
 
         public static IEnumerable<string> GetScreenshots()
         {
+            if (!Directory.Exists(ScreenshotsDirectory))
+            {
+                return new List<string>();
+            }
+
             return Directory.GetFiles(ScreenshotsDirectory, $"*{ScreenshotsPrefix}*");
         }
 

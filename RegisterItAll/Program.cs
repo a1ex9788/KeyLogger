@@ -20,7 +20,6 @@ namespace RegisterItAll
             {
                 foreach (ExecutableAsConsoleApplicationService service in servicesToRun)
                 {
-                    // This call is not awaited in order to execute all the Services in parallel way.
                     service.ExecuteAsConsoleApplication(args);
                 }
 

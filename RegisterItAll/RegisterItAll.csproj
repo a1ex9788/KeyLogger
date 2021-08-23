@@ -54,6 +54,9 @@
     <Compile Include="Services\Base\ExecutableAsConsoleApplicationService.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Services\Base\IterativeBehaviourService.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Services\EmailSenderService.cs">
       <SubType>Component</SubType>
     </Compile>

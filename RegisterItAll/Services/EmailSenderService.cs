@@ -6,37 +6,19 @@ using System.Configuration;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace RegisterItAll.Services
 {
-    public partial class EmailSenderService : ExecutableAsConsoleApplicationService
+    public partial class EmailSenderService : IterativeBehaviourService
     {
-        private static int DelaySecons = Convert.ToInt32(ConfigurationManager.AppSettings.Get("EmailFrequencyInSeconds"));
-
         private static string SenderEmailAddress = ConfigurationManager.AppSettings.Get("SenderEmailAddress");
         private static string SenderEmailHost = ConfigurationManager.AppSettings.Get("SenderEmailHost");
         private static string SenderEmailPassword = ConfigurationManager.AppSettings.Get("SenderEmailPassword");
         private static string ReceiverEmailAddress = ConfigurationManager.AppSettings.Get("ReceiverEmailAddress");
 
-        protected override async void OnStart(string[] args)
-        {
-            while (true)
-            {
-                await Task.Delay(DelaySecons * 1000);
+        protected override int ExecutionIntervalInSeconds => Convert.ToInt32(ConfigurationManager.AppSettings.Get("EmailFrequencyInSeconds"));
 
-                try
-                {
-                    SendEmail();
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                }
-            }
-        }
-
-        private static void SendEmail()
+        protected override void ExecuteIterationImplementation()
         {
             MailMessage message = new MailMessage()
             {

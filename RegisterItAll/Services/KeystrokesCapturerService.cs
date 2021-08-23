@@ -1,6 +1,7 @@
 ﻿using Gma.System.MouseKeyHook;
 using RegisterItAll.Managers;
 using RegisterItAll.Services.Base;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace RegisterItAll.Services
@@ -9,6 +10,14 @@ namespace RegisterItAll.Services
     {
         protected override void OnStart(string[] args)
         {
+            // This call is not awaited because it blocks the execution of the other services.
+            RegisterKeyLogging();
+        }
+
+        private static async Task RegisterKeyLogging()
+        {
+            await Task.Delay(1);
+
             IKeyboardMouseEvents hook = Hook.GlobalEvents();
 
             hook.KeyPress += OnKeyPressed;
