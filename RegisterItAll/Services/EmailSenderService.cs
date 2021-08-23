@@ -3,6 +3,7 @@ using RegisterItAll.Services.Base;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
@@ -48,11 +49,15 @@ namespace RegisterItAll.Services
 
             client.Send(message);
 
+            int attachmentsNumber = message.Attachments.Count();
+
             message.Dispose();
             client.Dispose();
 
             FilesManager.RemoveLogsFile(logsFile);
             FilesManager.RemoveScreenshots(screenshots);
+
+            Console.WriteLine($"Email sended with {attachmentsNumber} attachment/s.");
         }
     }
 }

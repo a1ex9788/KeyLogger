@@ -19,7 +19,9 @@ namespace RegisterItAll.Services
             Graphics graphics = Graphics.FromImage(bitmap);
 
             graphics.CopyFromScreen(0, 0, 0, 0, bitmap.Size);
-            FilesManager.SaveScreenshot(bitmap);
+            string screenshotName = FilesManager.SaveScreenshot(bitmap);
+
+            Console.WriteLine($"{screenshotName} taken and saved.");
         }
     }
 }

@@ -63,7 +63,7 @@ namespace RegisterItAll.Managers
             File.Delete(temporalLogsFile);
         }
 
-        public static void SaveScreenshot(Bitmap bitmap)
+        public static string SaveScreenshot(Bitmap bitmap)
         {
             string screenshotName = $"{ScreenshotsPrefix}{GetDateTimeSufix()}.jpeg";
             string screenshotPath = Path.Combine(ScreenshotsDirectory, screenshotName);
@@ -74,6 +74,8 @@ namespace RegisterItAll.Managers
             }
 
             bitmap.Save(screenshotPath, ImageFormat.Jpeg);
+
+            return screenshotName;
         }
 
         public static IEnumerable<string> GetScreenshots()
