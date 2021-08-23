@@ -3,11 +3,11 @@ using System.Timers;
 
 namespace RegisterItAll.Services.Base
 {
-    public abstract class IterativeBehaviourService : ExecutableAsConsoleApplicationService
+    public abstract class IterativeBehaviourService : Service
     {
         protected abstract int ExecutionIntervalInSeconds { get; }
 
-        protected override void OnStart(string[] args)
+        public override void Run()
         {
             Timer timer = new Timer();
             timer.Interval = ExecutionIntervalInSeconds * 1000;

